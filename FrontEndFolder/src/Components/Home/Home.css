@@ -1,0 +1,19 @@
+td button{
+padding:10px;
+margin-left: 8px;
+border: 3px solid #000000;
+border-radius:5px;
+font-size:1.2rem
+}
+
+td{
+    font-size:1.2rem   
+}
+
+td input{
+    font-size:1.2rem ;
+    text-align:center;
+    border-radius:5px;
+    border: 2px solid #000000;
+    padding: 8px 0;
+}

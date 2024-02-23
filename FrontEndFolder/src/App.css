@@ -1,0 +1,140 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Outfit:wght@100..900&display=swap");
+
+* {
+  font-family: "Fredoka", sans-serif;
+}
+
+
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+  background: rgb(27, 28, 30);
+  color: whitesmoke;
+  border-radius: 8px;
+  position:sticky;
+  top: 2px;
+}
+nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
+nav ul li {
+  list-style-type: none;
+  font-weight: 600;
+  /* margin-left: 15px; */
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 5px solid rgb(0, 115, 255);
+  width: 30vw;
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+form div {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(21, 57, 119);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+form div input {
+  width: 18vw;
+  padding: 1em;
+  border-radius: 8px;
+  border: 1px solid black;
+  outline: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+form div input:focus{
+  outline: 1px solid rgb(3, 3, 78);
+}
+
+form button {
+  margin: 15px;
+  padding: 18px;
+  background: rgb(11, 215, 11);
+  border-radius: 8px;
+  border: 1px solid black;
+  outline: none;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.Log__Out {
+  /* margin: 15px; */
+  padding: 9px 18px;
+  font-weight: 500;
+  background: rgb(11, 215, 11);
+  border-radius: 8px;
+  border: 1px solid black;
+  outline: none;
+  margin-left: 10px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+.Add__Modal {
+  position: absolute;
+  left: 35%;
+}
+
+table {
+  width: 100%;
+}
+
+thead tr th {
+  width: 120px;
+  text-align: center;
+  border-bottom: 3px solid #000000;
+  font-size: 1.2rem;
+}
+
+
+
+ /* td{
+  border: 1px solid #000000;
+} */
+
+tbody tr td {
+  width: 120px;
+  text-align: center;
+}
+
+
+@media screen and (min-width: 768px) and (max-width:1557px){
+  .Add__Modal {
+    left: 30%;
+  }
+}
+
+@media screen and (min-width: 0px) and (max-width:768px){
+  .Add__Modal {
+    left: 23%;
+  }
+  form{
+  width:50vw;
+  }
+  form div input{
+    width:50%;
+    height: 10px;;
+  }
+}
