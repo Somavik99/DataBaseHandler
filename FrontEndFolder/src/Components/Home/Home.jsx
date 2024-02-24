@@ -20,6 +20,8 @@ function Home() {
     _id: "",
   });
 
+  let [IsAscending, setIsAscending] = useState(false);
+
   axios.defaults.baseURL = "http://localhost:8008/";
 
   const addButtonStyles = {
@@ -92,6 +94,39 @@ function Home() {
     FetchTableData();
   };
 
+  const SortingDataNameAsc = () => {
+    setIsAscending(true);
+    const Data = [...GetTableData];
+    if (GetTableData.length > 0) {
+      const SortedData = Data.sort((a, b) => a.name.localeCompare(b.name));
+      setGetTableData(SortedData);
+    }
+  };
+  const SortingDataNameDsc = () => {
+    setIsAscending(false);
+    const Data = [...GetTableData];
+    if (GetTableData.length > 0) {
+      const SortedData = Data.sort((a, b) => b.name.localeCompare(a.name));
+      setGetTableData(SortedData);
+    }
+  };
+  const SortingDataEmailAsc = () => {
+    setIsAscending(true);
+    const Data = [...GetTableData];
+    if (GetTableData.length > 0) {
+      const SortedData = Data.sort((a, b) => a.email.localeCompare(b.email));
+      setGetTableData(SortedData);
+    }
+  };
+  const SortingDataEmailDsc = () => {
+    setIsAscending(false);
+    const Data = [...GetTableData];
+    if (GetTableData.length > 0) {
+      const SortedData = Data.sort((a, b) => b.email.localeCompare(a.email));
+      setGetTableData(SortedData);
+    }
+  };
+
   useEffect(() => {
     FetchTableData();
   }, []);
@@ -127,28 +162,30 @@ function Home() {
             <tr>
               <th>
                 User Name
-                <span>
-                  <HiArrowsUpDown />
-                </span>
+                {IsAscending === true ? (
+                  <span onClick={SortingDataNameDsc}>
+                    <HiArrowsUpDown />
+                  </span>
+                ) : (
+                  <span onClick={SortingDataNameAsc}>
+                    <HiArrowsUpDown />
+                  </span>
+                )}
               </th>
               <th>
                 Email
-                <span>
-                  <HiArrowsUpDown />
-                </span>
+                {IsAscending === true ? (
+                  <span onClick={SortingDataEmailDsc}>
+                    <HiArrowsUpDown />
+                  </span>
+                ) : (
+                  <span onClick={SortingDataEmailAsc}>
+                    <HiArrowsUpDown />
+                  </span>
+                )}
               </th>
-              <th>
-                Mobile
-                <span>
-                  <HiArrowsUpDown />
-                </span>
-              </th>
-              <th>
-                Actions
-                <span>
-                  <HiArrowsUpDown />
-                </span>
-              </th>
+              <th>Mobile</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
