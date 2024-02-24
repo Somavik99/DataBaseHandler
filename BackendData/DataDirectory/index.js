@@ -71,7 +71,9 @@ App.put("/PUT", async (req, res) => {
       message: "successfully updated",
     });
   } catch (error) {
-    res.status(500).json({ message: `user data update fail ${error}` });
+    res
+      .status(500)
+      .json({ status: 500, message: `user data update fail ${error}` });
   }
 });
 

@@ -20,7 +20,7 @@ const DB_Connection_URI =
 // {
 //     useNewUrlParser:true,
 //     useUnifiedTopology:true
-// }
+// }  Deprecated values
 
 Mongoose.connect(DB_Connection_URI)
   .then(() => {
