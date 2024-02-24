@@ -14,8 +14,8 @@ function App() {
       <NavBar />
 
       <Routes>
-        <Route index element={<DireectingPage />} />
-        {UserIsSignedIn && <Route path="/" element={<WelcomePage />} />}
+        {UserIsSignedIn && <Route index element={<DireectingPage />} />}
+        <Route path="/" element={<WelcomePage />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />

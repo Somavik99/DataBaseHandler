@@ -5,7 +5,7 @@ const SectionIMage = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  flexWrap:"wrap"
+  flexWrap: "wrap",
 };
 
 function DireectingPage() {
@@ -18,15 +18,15 @@ function DireectingPage() {
           alignItems: "center",
           marginTop: "8%",
           fontSize: "50px",
-          fontWeight:"600"
+          fontWeight: "600",
         }}
       >
-        <div>Login Or SignUp to Enter the Database</div>
+        <div> Database Management Details</div>
       </div>
       <section style={SectionIMage}>
-        <img src={LoginImage} alt="Login" style={{width:"30vw"}}/>
+        <img src={LoginImage} alt="Login" style={{ width: "30vw" }} />
 
-        <img src={SignImage} alt="SignUp" style={{width:"30vw"}}/>
+        <img src={SignImage} alt="SignUp" style={{ width: "30vw" }} />
       </section>
     </div>
   );

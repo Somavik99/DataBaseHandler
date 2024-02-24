@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import "./NavBar.css";
 
 function NavBar() {
   const SignedIn = localStorage.getItem("UserToken");
@@ -9,17 +10,6 @@ function NavBar() {
     Navigate("/Login");
   };
 
-  const LinkStyles = {
-    textDecoration: "none",
-    color: "white",
-    border: "1px solid white",
-    textAlign: "center",
-    width: "80px",
-    padding: "5px",
-    borderRadius: "8px",
-    marginLeft: "10px",
-  };
-
   return (
     <div>
       <nav>
@@ -28,20 +18,22 @@ function NavBar() {
         <ul>
           {!SignedIn ? (
             <>
-              <Link to="/Login" style={LinkStyles}>
+              <Link to="/Login" className="Link__Styles">
                 <li>Login</li>
               </Link>
 
-              <Link to="/Register" style={LinkStyles}>
+              <Link to="/Register" className="Link__Styles">
                 <li>SignUp</li>
               </Link>
             </>
           ) : (
             <>
-              <Link to="/" style={LinkStyles}>
+              <Link to="/" className="Link__Styles">
                 Account
               </Link>
-              <button onClick={LoggingOutHandler} className="Log__Out">LogOut</button>
+              <button onClick={LoggingOutHandler} className="Log__Out">
+                LogOut
+              </button>
             </>
           )}
         </ul>
