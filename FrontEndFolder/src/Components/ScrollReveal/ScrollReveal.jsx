@@ -1,6 +1,7 @@
 import { useEffect, useRef, CSSProperties } from "react";
 
 import scrollReveal from "scrollreveal";
+import "./Scroll.css";
 
 function ScrollReveal({ children }) {
   const SectionRef = useRef(null);
