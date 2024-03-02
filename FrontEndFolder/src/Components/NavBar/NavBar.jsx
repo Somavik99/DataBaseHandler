@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./NavBar.css";
+import { useEffect } from "react";
 
 function NavBar() {
   const SignedIn = localStorage.getItem("UserToken");
@@ -9,6 +10,12 @@ function NavBar() {
     localStorage.removeItem("UserToken");
     Navigate("/Login");
   };
+
+  useEffect(()=>{
+    if(SignedIn){
+      Navigate("/Home")
+    }
+  },[SignedIn,Navigate]);
 
   return (
     <div>
@@ -28,7 +35,7 @@ function NavBar() {
             </>
           ) : (
             <>
-              <Link to="/" className="Link__Styles">
+              <Link to="/Directing" className="Link__Styles">
                 Account
               </Link>
               <button onClick={LoggingOutHandler} className="Log__Out">
@@ -42,4 +49,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default NavBar

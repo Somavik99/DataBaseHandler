@@ -43,7 +43,8 @@ function Login() {
         userName: "",
         password: "",
       });
-      Navigate("/Home");
+        Navigate("/Home");
+      
       localStorage.setItem("UserToken", Token);
     } catch (err) {
       console.log(err);

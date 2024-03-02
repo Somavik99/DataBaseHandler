@@ -6,6 +6,7 @@ import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import WelcomePage from "./Components/WelcomePage/WelcomePage";
 import DireectingPage from "./Components/DirectingPage/DireectingPage";
+
 function App() {
   const UserIsSignedIn = localStorage.getItem("UserToken");
 
@@ -14,10 +15,17 @@ function App() {
       <NavBar />
 
       <Routes>
-        {UserIsSignedIn && <Route index element={<DireectingPage />} />}
+        {UserIsSignedIn && (
+          <Route path="/Directing" element={<DireectingPage />} />
+        )}
         <Route path="/" element={<WelcomePage />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
+      
+          <Route
+            path="/Home"
+            element={<Home UserIsSignedIn={UserIsSignedIn} />}
+          />
+        )
+         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
       </Routes>
     </div>

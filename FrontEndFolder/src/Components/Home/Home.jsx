@@ -7,9 +7,12 @@ import { IoCheckmarkDone } from "react-icons/io5";
 import AddData from "./AddData/AddData";
 import { RxCross1 } from "react-icons/rx";
 import { HiArrowsUpDown } from "react-icons/hi2";
+// import PageNotFound from "../../assets/page-not-found.png" 
 import "./Home.css";
+import { useNavigate } from "react-router-dom";
+// import User from "../../../../BackendData/AuthDirectory/UserModels/UserAuth";
 
-function Home() {
+function Home({UserIsSignedIn}) {
   const [GetTableData, setGetTableData] = useState([]);
   const [IsOpen, setIsOpen] = useState(false);
   const [IsEditing, setIsEditing] = useState(false);
@@ -20,7 +23,11 @@ function Home() {
     _id: "",
   });
 
-  let [IsAscending, setIsAscending] = useState(false);
+  const Navigate = useNavigate()
+
+  const [EditRowId, setEditRwoId] = useState(null);
+
+  const [IsAscending, setIsAscending] = useState(false);
 
   axios.defaults.baseURL = "http://localhost:8008/";
 
@@ -33,24 +40,29 @@ function Home() {
     fontSize: "1.8rem",
   };
 
-  const HandleEditChange = (e) => {
+  const HandleEditChange = (e, id) => {
     const { name, value } = e.target;
-    setEditInput((Edits) => {
-      return {
-        ...Edits,
+    setEditInput((Edits) => ({
+      ...Edits,
+      [id]: {
+        ...Edits[id],
         [name]: value,
-      };
-    });
+      },
+    }));
   };
 
-  // const {  HandleInputChange } = useDataString();
+
+
+
+
 
   const FetchTableData = async () => {
     try {
       const responseData = await axios.get("/GET");
-      setGetTableData(() => {
-        return responseData.data.data;
-      });
+     
+        setGetTableData(() => {
+          return responseData.data.data;
+        });
       console.log(responseData.data.data);
     } catch (err) {
       console.log(`Error Message : ${err.message}`);
@@ -61,14 +73,18 @@ function Home() {
     setIsOpen((open) => !open);
   };
 
-  const HandleEdit = (data) => {
-    setEditInput(data);
+  const HandleEdit = (id) => {
+    setEditRwoId(id);
+    setEditInput((data) => ({
+      ...data,
+      [id]: GetTableData.find((item) => item._id === id),
+    }));
     setIsEditing(true);
   };
 
   const HandleDelete = async (id) => {
     try {
-      const DeleteData = await axios.delete("/DELETE/" + id);
+      const DeleteData = await axios.delete(`/DELETE/${id}`);
       if (DeleteData.data.success) {
         FetchTableData();
       }
@@ -77,10 +93,15 @@ function Home() {
     }
   };
 
-  const HandleUpdate = async () => {
+  const HandleUpdate = async (data) => {
     setIsEditing(false);
     try {
-      const UpdatedData = await axios.put("/PUT", EditInput);
+      const NewData = {
+        name: EditInput[data._id]?.name || data.name,
+        email: EditInput[data._id]?.email || data.email,
+        mobile: EditInput[data._id]?.mobile || data.mobile,
+      };
+      const UpdatedData = await axios.put(`/PUT/${data._id}`, NewData);
       if (UpdatedData.data.success) {
         FetchTableData();
       }
@@ -129,10 +150,16 @@ function Home() {
 
   useEffect(() => {
     FetchTableData();
-  }, []);
+
+  if(!localStorage.getItem("UserToken")){
+    Navigate("/Login")
+  
+}
+   
+  }, [UserIsSignedIn, Navigate]);
 
   return (
-    <div style={{ marginTop: "50px" }}>
+ <>   <div style={{ marginTop: "50px" }}>
       <div>
         <button onClick={HandleAddModal} style={addButtonStyles}>
           <RiUserAddLine color="Green" />
@@ -163,11 +190,11 @@ function Home() {
               <th>
                 User Name
                 {IsAscending === true ? (
-                  <span onClick={SortingDataNameDsc}>
+                  <span onClick={() => SortingDataNameDsc()}>
                     <HiArrowsUpDown />
                   </span>
                 ) : (
-                  <span onClick={SortingDataNameAsc}>
+                  <span onClick={() => SortingDataNameAsc()}>
                     <HiArrowsUpDown />
                   </span>
                 )}
@@ -175,11 +202,11 @@ function Home() {
               <th>
                 Email
                 {IsAscending === true ? (
-                  <span onClick={SortingDataEmailDsc}>
+                  <span onClick={() => SortingDataEmailDsc()}>
                     <HiArrowsUpDown />
                   </span>
                 ) : (
-                  <span onClick={SortingDataEmailAsc}>
+                  <span onClick={() => SortingDataEmailAsc()}>
                     <HiArrowsUpDown />
                   </span>
                 )}
@@ -193,36 +220,36 @@ function Home() {
               return (
                 <tr key={index}>
                   <td>
-                    {IsEditing ? (
+                    {IsEditing && EditRowId === data._id ? (
                       <input
                         type="text"
                         name="name"
-                        value={EditInput.name}
-                        onChange={HandleEditChange}
+                        value={EditInput[data._id].name || data.name}
+                        onChange={(e) => HandleEditChange(e, data._id)}
                       />
                     ) : (
                       <>{data.name}</>
                     )}
                   </td>
                   <td>
-                    {IsEditing ? (
+                    {IsEditing && EditRowId === data._id ? (
                       <input
                         type="email"
                         name="email"
-                        value={EditInput.email}
-                        onChange={HandleEditChange}
+                        value={EditInput[data._id]?.email || data.email}
+                        onChange={(e) => HandleEditChange(e, data._id)}
                       />
                     ) : (
                       <>{data.email}</>
                     )}
                   </td>
                   <td>
-                    {IsEditing ? (
+                    {IsEditing && EditRowId === data._id ? (
                       <input
                         type="number"
                         name="mobile"
-                        value={EditInput.mobile}
-                        onChange={HandleEditChange}
+                        value={EditInput[data._id]?.mobile || data.mobile}
+                        onChange={(e) => HandleEditChange(e, data._id)}
                       />
                     ) : (
                       <>{data.mobile}</>
@@ -233,11 +260,11 @@ function Home() {
                       <button>
                         <FiEdit3
                           color="green"
-                          onClick={() => HandleEdit(data)}
+                          onClick={() => HandleEdit(data._id)}
                         />
                       </button>
                     ) : (
-                      <button onClick={HandleUpdate}>
+                      <button onClick={() => HandleUpdate(data)}>
                         <IoCheckmarkDone color="green" />
                       </button>
                     )}
@@ -257,7 +284,7 @@ function Home() {
           No Data Available
         </div>
       )}
-    </div>
+    </div></>
   );
 }
 
